@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arcade Build Companion</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1>&#127918; Arcade Build Companion</h1>
+      <p class="subtitle">32" Full-Size Cabinet &mdash; DIY Build Planner</p>
+    </div>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="globalProgress">0%</div>
+    </div>
+  </header>
+
+  <nav>
+    <button class="nav-btn active" data-tab="dashboard">Dashboard</button>
+    <button class="nav-btn" data-tab="parts">Parts List</button>
+    <button class="nav-btn" data-tab="cabinet">Cabinet Specs</button>
+    <button class="nav-btn" data-tab="checklist">Build Checklist</button>
+    <button class="nav-btn" data-tab="budget">Budget</button>
+    <button class="nav-btn" data-tab="notes">Notes</button>
+  </nav>
+
+  <main>
+    <!-- DASHBOARD -->
+    <section class="tab-content active" id="dashboard">
+      <div class="dashboard-grid">
+        <div class="stat-card">
+          <h3>Build Progress</h3>
+          <div class="stat-value" id="statProgress">0%</div>
+          <div class="stat-bar"><div class="stat-fill" id="statProgressFill"></div></div>
+        </div>
+        <div class="stat-card">
+          <h3>Parts Acquired</h3>
+          <div class="stat-value" id="statParts">0 / 0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Total Budget</h3>
+          <div class="stat-value" id="statBudget">R 0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Spent So Far</h3>
+          <div class="stat-value" id="statSpent">R 0</div>
+        </div>
+      </div>
+
+      <div class="phase-overview">
+        <h2>Build Phases</h2>
+        <div class="phase-cards">
+          <div class="phase-card" data-phase="1">
+            <div class="phase-icon">&#127959;</div>
+            <h4>Phase 1: Acquisition</h4>
+            <p>Source &amp; order all parts &amp; materials</p>
+            <div class="phase-progress"><div class="phase-fill" id="phase1Fill"></div></div>
+          </div>
+          <div class="phase-card" data-phase="2">
+            <div class="phase-icon">&#9986;</div>
+            <h4>Phase 2: Cabinet Build</h4>
+            <p>Cut, assemble &amp; finish the cabinet</p>
+            <div class="phase-progress"><div class="phase-fill" id="phase2Fill"></div></div>
+          </div>
+          <div class="phase-card" data-phase="3">
+            <div class="phase-icon">&#128268;</div>
+            <h4>Phase 3: Electronics</h4>
+            <p>Wire controls, speakers &amp; power</p>
+            <div class="phase-progress"><div class="phase-fill" id="phase3Fill"></div></div>
+          </div>
+          <div class="phase-card" data-phase="4">
+            <div class="phase-icon">&#128187;</div>
+            <h4>Phase 4: PC &amp; Software</h4>
+            <p>Setup PC, emulation &amp; frontend</p>
+            <div class="phase-progress"><div class="phase-fill" id="phase4Fill"></div></div>
+          </div>
+          <div class="phase-card" data-phase="5">
+            <div class="phase-icon">&#127918;</div>
+            <h4>Phase 5: Testing &amp; Play</h4>
+            <p>Final tuning &amp; game time</p>
+            <div class="phase-progress"><div class="phase-fill" id="phase5Fill"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quick-links">
+        <h2>Quick Links</h2>
+        <div class="link-grid">
+          <a href="https://homeofarcadia.co.za/collections/diy-arcade-kits/products/empty-wooden-arcade-cabinet-32" target="_blank" class="quick-link">
+            <span class="ql-icon">&#127960;</span>
+            <span>Cabinet (32")</span>
+            <span class="ql-price">R 4,500</span>
+          </a>
+          <a href="https://homeofarcadia.co.za/collections/diy-arcade-kits" target="_blank" class="quick-link">
+            <span class="ql-icon">&#128722;</span>
+            <span>Home of Arcadia &mdash; DIY Kits</span>
+            <span class="ql-price">Browse All</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTS LIST -->
+    <section class="tab-content" id="parts">
+      <div class="parts-header">
+        <h2>Parts &amp; Components</h2>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="essential">Essential</button>
+          <button class="filter-btn" data-filter="optional">Optional</button>
+          <button class="filter-btn" data-filter="acquired">Acquired</button>
+          <button class="filter-btn" data-filter="needed">Still Needed</button>
+        </div>
+      </div>
+
+      <div class="parts-category">
+        <h3>&#127960; Cabinet &amp; Structure</h3>
+        <div class="parts-grid" id="cabinetParts"></div>
+      </div>
+
+      <div class="parts-category">
+        <h3>&#128377; Controls &amp; Input</h3>
+        <div class="parts-grid" id="controlsParts"></div>
+      </div>
+
+      <div class="parts-category">
+        <h3>&#128268; Electronics &amp; Wiring</h3>
+        <div class="parts-grid" id="electronicsParts"></div>
+      </div>
+
+      <div class="parts-category">
+        <h3>&#128264; Audio</h3>
+        <div class="parts-grid" id="audioParts"></div>
+      </div>
+
+      <div class="parts-category">
+        <h3>&#128176; Coin &amp; Payment</h3>
+        <div class="parts-grid" id="coinParts"></div>
+      </div>
+
+      <div class="parts-category">
+        <h3>&#127918; Game Board / PC</h3>
+        <div class="parts-grid" id="gameParts"></div>
+      </div>
+
+      <div class="parts-category">
+        <h3>&#128296; Finishing &amp; Trim</h3>
+        <div class="parts-grid" id="finishingParts"></div>
+      </div>
+    </section>
+
+    <!-- CABINET SPECS -->
+    <section class="tab-content" id="cabinet">
+      <h2>Cabinet Specifications</h2>
+      <p class="spec-note">Based on the full-size arcade cabinet plans PDF. Dimensions in centimetres. Material: 3/4" (19mm) MDF.</p>
+
+      <div class="specs-grid">
+        <div class="spec-card">
+          <h3>&#128207; Material</h3>
+          <ul>
+            <li><strong>Sheet:</strong> 3/4" (19mm) MDF</li>
+            <li>Each build will have small variations &mdash; cut to fit</li>
+            <li>Cut side panels first, draw out all piece locations &amp; blocking</li>
+            <li>Measure and then cut panels to fit your build</li>
+          </ul>
+        </div>
+
+        <div class="spec-card">
+          <h3>&#128208; Overall Dimensions</h3>
+          <table class="spec-table">
+            <tr><td>Height (total)</td><td>185.00 cm</td></tr>
+            <tr><td>Width (side panel)</td><td>76.49 cm</td></tr>
+            <tr><td>Depth (base)</td><td>62.00 cm</td></tr>
+            <tr><td>Screen opening width</td><td>53.79 cm</td></tr>
+            <tr><td>Screen opening height</td><td>46.19 cm</td></tr>
+          </table>
+        </div>
+
+        <div class="spec-card">
+          <h3>&#9650; Angled Cuts</h3>
+          <table class="spec-table">
+            <tr><td>Top bezel angle</td><td>68&deg;</td></tr>
+            <tr><td>Control panel tilt</td><td>115&deg;</td></tr>
+            <tr><td>Front panel lean</td><td>101&deg;</td></tr>
+            <tr><td>Monitor mount angle</td><td>85&deg;</td></tr>
+            <tr><td>Back panel tilt</td><td>109&deg;</td></tr>
+            <tr><td>Top angle panel</td><td>135&deg;</td></tr>
+          </table>
+        </div>
+
+        <div class="spec-card">
+          <h3>&#128204; Panel Breakdown</h3>
+          <table class="spec-table">
+            <tr><td>Side Panel (x2)</td><td>50.00 &times; 185.00 cm</td></tr>
+            <tr><td>Top Angle Panel</td><td>81.28 cm wide</td></tr>
+            <tr><td>Back Door</td><td>81.28 cm wide</td></tr>
+            <tr><td>Back Panel</td><td>81.28 cm wide</td></tr>
+            <tr><td>Screen Panel</td><td>53.79 &times; 46.19 cm</td></tr>
+            <tr><td>Control Panel</td><td>62.00 cm wide</td></tr>
+            <tr><td>Control Panel Front</td><td>19.89 cm tall</td></tr>
+            <tr><td>Front Panel</td><td>8.64 cm wide</td></tr>
+            <tr><td>Top Panel</td><td>28.05 cm deep</td></tr>
+            <tr><td>Speaker Panel</td><td>53.79 cm wide</td></tr>
+            <tr><td>Mid Shelf</td><td>77.72 &times; 30.08 cm</td></tr>
+          </table>
+        </div>
+
+        <div class="spec-card">
+          <h3>&#128736; Key Measurements on Side Profile</h3>
+          <table class="spec-table">
+            <tr><td>Control panel height from floor</td><td>96.02 cm</td></tr>
+            <tr><td>Screen centre height</td><td>135.00 cm</td></tr>
+            <tr><td>Marquee height</td><td>153.90 cm</td></tr>
+            <tr><td>Top of cabinet</td><td>162.62 cm</td></tr>
+            <tr><td>Front kick plate height</td><td>22.38 cm</td></tr>
+            <tr><td>Control panel depth from front</td><td>20.36 cm</td></tr>
+            <tr><td>Mid shelf height</td><td>82.03 cm</td></tr>
+          </table>
+        </div>
+
+        <div class="spec-card">
+          <h3>&#128221; Build Notes</h3>
+          <ul>
+            <li>Plans by Mike &mdash; <a href="https://youtube.com/webuildstuff" target="_blank">youtube.com/webuildstuff</a></li>
+            <li>Draw out all pieces on side panels before cutting</li>
+            <li>Use plans as a starting point &mdash; adapt to your specific build</li>
+            <li>PC is ready and set &mdash; no need to source a computer</li>
+            <li>Button suppliers TBD &mdash; will update as build progresses</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUILD CHECKLIST -->
+    <section class="tab-content" id="checklist">
+      <h2>Build Checklist</h2>
+      <div class="checklist-controls">
+        <button class="btn-primary" id="resetChecklist">Reset All</button>
+        <span class="checklist-summary" id="checklistSummary">0 / 0 complete</span>
+      </div>
+
+      <div class="checklist-phase" data-phase="1">
+        <h3 onclick="togglePhase(this)">
+          <span class="toggle-arrow">&#9654;</span> Phase 1: Parts Acquisition
+        </h3>
+        <div class="checklist-items collapsed">
+          <label><input type="checkbox" data-id="c1"> Order empty 32" cabinet (R4,500)</label>
+          <label><input type="checkbox" data-id="c2"> Decide: credit button only OR cash box (+R850)</label>
+          <label><input type="checkbox" data-id="c3"> Order 2-player DIY kit with buttons &amp; joysticks (R1,899)</label>
+          <label><input type="checkbox" data-id="c4"> Order micro switches &times;20 (R35 each)</label>
+          <label><input type="checkbox" data-id="c5"> Order 2 start buttons (included in kit or separately)</label>
+          <label><input type="checkbox" data-id="c6"> Order full arcade wiring kit (R400)</label>
+          <label><input type="checkbox" data-id="c7"> Order power supply (R800)</label>
+          <label><input type="checkbox" data-id="c8"> Order speakers &times;2 (12W or 40W) (R120&ndash;R150 each)</label>
+          <label><input type="checkbox" data-id="c9"> Order T-moulding tape (R320)</label>
+          <label><input type="checkbox" data-id="c10"> Research &amp; order button supplier (TBD)</label>
+          <label><input type="checkbox" data-id="c11"> Order marquee artwork / LED marquee (TBD)</label>
+          <label><input type="checkbox" data-id="c12"> Obtain 32" monitor/TV (check compatibility)</label>
+          <label><input type="checkbox" data-id="c13"> Confirm PC is ready and accessible</label>
+        </div>
+      </div>
+
+      <div class="checklist-phase" data-phase="2">
+        <h3 onclick="togglePhase(this)">
+          <span class="toggle-arrow">&#9654;</span> Phase 2: Cabinet Construction
+        </h3>
+        <div class="checklist-items collapsed">
+          <label><input type="checkbox" data-id="c14"> Unbox cabinet &amp; inspect all parts</label>
+          <label><input type="checkbox" data-id="c15"> Verify: wooden cabinet, screen frame/bezel, pre-drilled control panel</label>
+          <label><input type="checkbox" data-id="c16"> Verify: steel brackets for control panel &amp; top marquee included</label>
+          <label><input type="checkbox" data-id="c17"> Test-fit 32" screen in bezel opening</label>
+          <label><input type="checkbox" data-id="c18"> Sand any rough edges on cabinet</label>
+          <label><input type="checkbox" data-id="c19"> Apply T-moulding to edges</label>
+          <label><input type="checkbox" data-id="c20"> Touch up paint / finish as needed</label>
+          <label><input type="checkbox" data-id="c21"> Install mid-shelf for PC/components</label>
+          <label><input type="checkbox" data-id="c22"> Install speaker panel</label>
+        </div>
+      </div>
+
+      <div class="checklist-phase" data-phase="3">
+        <h3 onclick="togglePhase(this)">
+          <span class="toggle-arrow">&#9654;</span> Phase 3: Electronics &amp; Wiring
+        </h3>
+        <div class="checklist-items collapsed">
+          <label><input type="checkbox" data-id="c23"> Mount 32" screen in cabinet</label>
+          <label><input type="checkbox" data-id="c24"> Install joysticks on control panel</label>
+          <label><input type="checkbox" data-id="c25"> Install action buttons on control panel</label>
+          <label><input type="checkbox" data-id="c26"> Install start/select buttons</label>
+          <label><input type="checkbox" data-id="c27"> Wire all buttons to micro switches</label>
+          <label><input type="checkbox" data-id="c28"> Connect joysticks &amp; buttons to USB encoder</label>
+          <label><input type="checkbox" data-id="c29"> Wire speakers</label>
+          <label><input type="checkbox" data-id="c30"> Install &amp; wire power supply</label>
+          <label><input type="checkbox" data-id="c31"> Install coin acceptor (if using cash box option)</label>
+          <label><input type="checkbox" data-id="c32"> Cable management &amp; routing</label>
+          <label><input type="checkbox" data-id="c33"> Test all button inputs (no PC yet)</label>
+        </div>
+      </div>
+
+      <div class="checklist-phase" data-phase="4">
+        <h3 onclick="togglePhase(this)">
+          <span class="toggle-arrow">&#9654;</span> Phase 4: PC &amp; Software Setup
+        </h3>
+        <div class="checklist-items collapsed">
+          <label><input type="checkbox" data-id="c34"> Mount PC in cabinet (mid-shelf)</label>
+          <label><input type="checkbox" data-id="c35"> Connect PC to screen (HDMI/DP)</label>
+          <label><input type="checkbox" data-id="c36"> Connect USB encoder to PC</label>
+          <label><input type="checkbox" data-id="c37"> Connect audio output to speakers</label>
+          <label><input type="checkbox" data-id="c38"> Install emulation software (RetroArch / Batocera / LaunchBox)</label>
+          <label><input type="checkbox" data-id="c39"> Configure joystick &amp; button mappings</label>
+          <label><input type="checkbox" data-id="c40"> Load ROMs / game library</label>
+          <label><input type="checkbox" data-id="c41"> Configure frontend (Big Box / EmulationStation)</label>
+          <label><input type="checkbox" data-id="c42"> Set up attract mode / screensaver</label>
+        </div>
+      </div>
+
+      <div class="checklist-phase" data-phase="5">
+        <h3 onclick="togglePhase(this)">
+          <span class="toggle-arrow">&#9654;</span> Phase 5: Testing &amp; Final
+        </h3>
+        <div class="checklist-items collapsed">
+          <label><input type="checkbox" data-id="c43"> Full power-on test</label>
+          <label><input type="checkbox" data-id="c44"> Test all buttons &amp; joysticks in-game</label>
+          <label><input type="checkbox" data-id="c45"> Audio balance &amp; volume check</label>
+          <label><input type="checkbox" data-id="c46"> Screen brightness &amp; alignment</label>
+          <label><input type="checkbox" data-id="c47"> Coin mechanism test (if installed)</label>
+          <label><input type="checkbox" data-id="c48"> Final cable management</label>
+          <label><input type="checkbox" data-id="c49"> Install back panel / door</label>
+          <label><input type="checkbox" data-id="c50"> Apply marquee &amp; art</label>
+          <label><input type="checkbox" data-id="c51"> PLAY!</label>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUDGET -->
+    <section class="tab-content" id="budget">
+      <h2>Budget Tracker</h2>
+      <div class="budget-summary">
+        <div class="budget-stat">
+          <span class="budget-label">Estimated Total</span>
+          <span class="budget-value" id="budgetEstimate">R 0</span>
+        </div>
+        <div class="budget-stat">
+          <span class="budget-label">Actual Spent</span>
+          <span class="budget-value" id="budgetActual">R 0</span>
+        </div>
+        <div class="budget-stat">
+          <span class="budget-label">Remaining</span>
+          <span class="budget-value" id="budgetRemaining">R 0</span>
+        </div>
+      </div>
+
+      <div class="budget-table-wrapper">
+        <table class="budget-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Est. Cost</th>
+              <th>Actual Cost</th>
+              <th>Qty</th>
+              <th>Status</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody id="budgetBody"></tbody>
+          <tfoot>
+            <tr>
+              <td><strong>Total</strong></td>
+              <td id="footEstimate"><strong>R 0</strong></td>
+              <td id="footActual"><strong>R 0</strong></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="budget-add">
+        <h3>Add Custom Item</h3>
+        <div class="add-form">
+          <input type="text" id="customName" placeholder="Item name">
+          <input type="number" id="customCost" placeholder="Cost (R)">
+          <input type="number" id="customQty" placeholder="Qty" value="1" min="1">
+          <button class="btn-primary" id="addCustomItem">Add</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section class="tab-content" id="notes">
+      <h2>Build Notes</h2>
+      <textarea id="notesArea" placeholder="Type your build notes here... They are saved automatically to your browser."></textarea>
+      <div class="notes-actions">
+        <button class="btn-primary" id="exportNotes">Export Notes</button>
+        <button class="btn-secondary" id="clearNotes">Clear Notes</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Arcade Build Companion &mdash; Home of Arcadia DIY Kit Builder &mdash; <a href="https://homeofarcadia.co.za/collections/diy-arcade-kits" target="_blank">Shop Parts</a></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
